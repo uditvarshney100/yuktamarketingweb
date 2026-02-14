@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yukta Marketing Pvt. Ltd | Divine Essentials</title>
+    
+    <!-- External Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 1. VARIABLES & RESET --- */
+        :root {
+            --primary: #d35400; /* Burnt Orange */
+            --primary-dark: #a04000;
+            --gold: #FFD700;
+            --gold-glow: #ffae00;
+            --cream: #FFFBF2;
+            --dark: #0f0800;
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--cream);
+            color: #333;
+            overflow-x: hidden;
+            /* Main Site Background Pattern */
+            background-image: 
+                radial-gradient(var(--gold) 0.5px, transparent 0.5px), 
+                radial-gradient(var(--gold) 0.5px, var(--cream) 0.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        /* --- 2. ROYAL GRAPHIC PRELOADER --- */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1a0f05; /* Deep rich brown background */
+            overflow: hidden;
+        }
+
+        /* --- BACKGROUND FULL OF GRAPHICS --- */
+        .bg-pattern {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.15;
+            background-image: radial-gradient(circle, var(--gold) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 0;
+        }
+
+        /* Floating Symbols in Background */
+        .symbol-floater {
+            position: absolute;
+            color: var(--gold);
+            opacity: 0.15;
+            font-size: 2rem;
+            animation: floatBackground 15s infinite linear;
+            user-select: none;
+        }
+        .sym-1 { top: 15%; left: 15%; font-size: 3.5rem; }
+        .sym-2 { top: 25%; right: 15%; font-size: 2.5rem; animation-duration: 18s; }
+        .sym-3 { bottom: 20%; left: 25%; font-size: 4.5rem; animation-duration: 25s; }
+        .sym-4 { bottom: 35%; right: 25%; font-size: 3rem; animation-duration: 22s; }
+        .sym-5 { top: 50%; left: 5%; font-size: 2rem; animation-duration: 12s; }
+        .sym-6 { top: 10%; left: 50%; font-size: 2.5rem; opacity: 0.1; }
+        
+        @keyframes floatBackground {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* The Gates/Curtains */
+        .curtain {
+            position: absolute;
+            top: 0; height: 100%; width: 51%;
+            background: linear-gradient(135deg, #2c1e12 0%, #0f0800 100%);
+            z-index: 1;
+            transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1);
+            border: none;
+        }
+        
+        .curtain-left { left: 0; transform-origin: left; }
+        .curtain-right { right: 0; transform-origin: right; }
+
+        /* Loader Content Wrapper */
+        .loader-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out;
+        }
+
+        /* --- NEW GRAPHIC: Radiant Chakra/Mandala --- */
+        .chakra-container {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Spinning Rays */
+        .sun-rays {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 40px; /* Soft square */
+            background: conic-gradient(from 0deg, transparent 0%, rgba(255, 215, 0, 0.2) 10%, transparent 20%, rgba(255, 215, 0, 0.2) 30%, transparent 40%, rgba(255, 215, 0, 0.2) 50%, transparent 60%, rgba(255, 215, 0, 0.2) 70%, transparent 80%, rgba(255, 215, 0, 0.2) 90%, transparent 100%);
+            animation: spin 20s linear infinite;
+            z-index: 1;
+        }
+
+        /* Decorative Ring */
+        .deco-ring {
+            position: absolute;
+            inset: 0; margin: auto;
+            width: 210px; height: 210px;
+            border: 2px dashed var(--gold);
+            border-radius: 30px; /* Matches logo shape */
+            animation: spin-reverse 15s linear infinite;
+            z-index: 2;
+        }
+
+        /* The Logo itself - BACKGROUND TRANSPARENT */
+        .loader-logo {
+            width: 160px; height: 160px;
+            border-radius: 20px; 
+            object-fit: contain;
+            background: transparent; 
+            padding: 15px; /* Padding to prevent cut-off */
+            z-index: 5;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+            border: 3px solid var(--gold);
+            animation: heartbeat 2s infinite;
+        }
+
+        /* Text Styling */
+        .text-wrapper { text-align: center; z-index: 10; margin-top: -20px; }
+
+        .brand-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem; font-weight: 900; 
+            letter-spacing: 2px; margin-bottom: 5px;
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #aa771c);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            animation: goldShimmer 3s linear infinite; background-size: 200%;
+        }
+
+        .sub-brand {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .loading-bar {
+            width: 200px; height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px; margin: 0 auto 15px;
+            position: relative; overflow: hidden;
+        }
+
+        .bar-fill {
+            position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+            background: var(--gold);
+            box-shadow: 0 0 15px var(--gold);
+            animation: loadProgress 2s ease-in-out forwards;
+        }
+
+        .tagline {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2rem; 
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* Preloader Exit State */
+        body.loaded .curtain-left { transform: translateX(-100%); }
+        body.loaded .curtain-right { transform: translateX(100%); }
+        body.loaded .loader-content { opacity: 0; transform: scale(1.1); }
+        body.loaded #preloader { pointer-events: none; visibility: hidden; transition: visibility 0s 1.5s; }
+
+        /* Animation Keyframes */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+        @keyframes goldShimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+        @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
+        @keyframes pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        @keyframes heroReveal { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shine { to { background-position: 200% center; } }
+        @keyframes floatBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes floatBlob { from { transform: translate(0,0); } to { transform: translate(30px, 30px); } }
+
+
+        /* --- 3. HEADER (Transparent & Minimal) --- */
+        header {
+            background: transparent; /* Fully transparent */
+            position: absolute; /* Sits over the hero image */
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: none;
+            transition: all 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-img { height: 60px; width: auto; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
+        .brand:hover .logo-img { transform: rotate(10deg); }
+
+        /* Company Name Removed */
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            color: #fff; /* White text for visibility over hero */
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Shadow for better readability */
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 0; height: 2px; background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* --- 4. HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            color: white;
+        }
+
+        #hero-particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 120%;
+            background: url('https://images.unsplash.com/photo-1606293926075-69a00dbfde81?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            z-index: -2;
+            animation: slowZoom 25s infinite alternate ease-in-out;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(19, 10, 0, 0.8));
+            z-index: -1;
+        }
+
+        .hero-content {
+            z-index: 1;
+            padding: 50px;
+            background: rgba(0,0,0,0.2); /* Lighter background for better transparency feel */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: heroReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 1.8s;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            background: linear-gradient(to right, #FFD700, #FFF, #FFD700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: shine 5s linear infinite;
+            background-size: 200%;
+        }
+
+        /* NEW STYLE FOR BRAND SUBTITLE IN HERO */
+        .hero .brand-sub {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: -15px; /* Pull closer to title */
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            color: #eee;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        .btn-gold {
+            position: relative;
+            background: linear-gradient(45deg, #d35400, #ff8c00);
+            color: white;
+            padding: 16px 45px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 20px rgba(211, 84, 0, 0.6);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transition: 0.5s;
+        }
+        .btn-gold:hover::before { left: 100%; }
+        .btn-gold:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(211, 84, 0, 0.8); }
+
+        /* --- 5. PRODUCTS SECTION --- */
+        .products { padding: 100px 0; position: relative; }
+
+        .blob {
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: floatBlob 10s ease-in-out infinite alternate;
+        }
+        .blob1 { top: 10%; left: -100px; }
+        .blob2 { bottom: 10%; right: -100px; animation-delay: 5s; }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .section-header h2 i {
+            font-size: 2rem;
+            color: var(--gold);
+            vertical-align: middle;
+            margin: 0 15px;
+            animation: spin 8s linear infinite;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
+            perspective: 1000px; 
+        }
+
+        /* Product Card */
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            opacity: 0; 
+            transform: translateY(100px);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) rotateX(2deg);
+            box-shadow: var(--shadow-lg);
+            z-index: 10;
+        }
+
+        .img-box {
+            height: 300px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #fff, #fafafa);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img-box img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        }
+
+        .product-card:hover .img-box img { transform: scale(1.15) translateY(-10px); }
+
+        .img-box::after {
+            content: ''; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 0; height: 0;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+            opacity: 0; transition: all 0.5s;
+            border-radius: 50%;
+        }
+        .product-card:hover .img-box::after { width: 300px; height: 300px; opacity: 1; }
+
+        .details { padding: 30px; text-align: center; background: white; position: relative; }
+
+        .details h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .qty { color: #888; font-size: 0.95rem; margin-bottom: 15px; display: block; font-weight: 300; }
+
+        .price {
+            display: block;
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .order-btn {
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+        .order-btn:hover { background: #128c7e; transform: scale(1.05); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5); }
+
+        /* --- 6. FOOTER --- */
+        footer {
+            background: #0f0800;
+            color: #cdcdcd;
+            padding-top: 80px;
+            position: relative;
+            border-top: 5px solid var(--primary);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            padding-bottom: 60px;
+        }
+
+        .footer-col h3 {
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+        }
+
+        .social-icons a {
+            display: inline-flex; justify-content: center; align-items: center;
+            width: 45px; height: 45px; border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            color: var(--gold); margin-right: 15px;
+            font-size: 1.2rem;
+            transition: 0.4s;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .social-icons a:hover { background: var(--primary); color: white; transform: translateY(-5px) rotate(360deg); }
+
+        .copyright {
+            background: #080400;
+            border-top: 1px solid #222;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* --- FLOATING WHATSAPP --- */
+        .float-wa {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 65px; height: 65px;
+            background: #25D366; color: white;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 35px; z-index: 1001;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            animation: floatBounce 3s ease-in-out infinite;
+        }
+        .float-wa:hover { transform: scale(1.1); }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. ROYAL GRAPHIC PRELOADER -->
+    <div id="preloader">
+        <!-- Floating Symbols Background -->
+        <div class="curtain curtain-left">
+            <i class="fas fa-leaf symbol-floater sym-1"></i>
+            <i class="fas fa-star symbol-floater sym-3"></i>
+            <i class="fas fa-fire-alt symbol-floater sym-5"></i>
+        </div>
+        <div class="curtain curtain-right">
+            <i class="fas fa-sun symbol-floater sym-2"></i>
+            <i class="fas fa-bahai symbol-floater sym-4"></i>
+            <i class="fas fa-spa symbol-floater sym-6"></i>
+        </div>
+        <div class="bg-pattern"></div>
+        
+        <div class="loader-content">
+            
+            <!-- NEW CENTER GRAPHIC: Radiant Chakra/Mandala -->
+            <div class="chakra-container">
+                <div class="sun-rays"></div>
+                <div class="deco-ring"></div>
+                <!-- Rounded Square Logo to prevent cutting corners -->
+                <img src="logo.jpeg" alt="Loading..." class="loader-logo">
+            </div>
+            
+            <!-- Text & Bar -->
+            <div class="text-wrapper">
+                <h2 class="brand-title">SHRI HARI MANDIR</h2>
+                <p class="sub-brand">Brand by Yukta Marketing Pvt. Ltd.</p>
+                <div class="loading-bar">
+                    <div class="bar-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. FLOATING WHATSAPP -->
+    <a href="https://wa.me/919354646811" class="float-wa"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- 3. HEADER -->
+    <header>
+        <div class="container">
+            <a href="#" class="brand">
+                <img src="logo.jpeg" alt="Logo" class="logo-img">
+                <!-- Text Removed as requested -->
+            </a>
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#products">Collection</a>
+                <a href="#footer">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 4. HERO SECTION WITH PARTICLES -->
+    <section id="home" class="hero">
+        <canvas id="hero-particles"></canvas>
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Shri Hari Mandir</h1>
+            <p class="brand-sub">Brand by Yukta Marketing Pvt. Ltd.</p>
+            <p>Embrace the Purity. Elevate your Spirit.</p>
+            <a href="#products" class="btn-gold">Explore Collection</a>
+        </div>
+    </section>
+
+    <!-- 5. PRODUCTS SECTION -->
+    <section id="products" class="products">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+
+        <div class="container" style="display: block;">
+            
+            <div class="section-header">
+                <h2><i class="fas fa-star star-icon"></i> Star Products <i class="fas fa-star star-icon"></i></h2>
+            </div>
+
+            <div class="product-grid">
+                
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="img-box">
+                        <img src="chandan psd pouchPNG.png" alt="Chandan">
+                    </div>
+                    <div class="details">
+                        <h3>Chandan Zipper</h3>
+                        <span class="qty">Net Qty: 20 sticks</span>
+                        <span class="price">₹20.00</span>
+                        <a href="https://wa.me/919354646811?text=Interested%20in%20Chandan%20Zipper" class="order-btn">
+                            <i class="fab fa-whatsapp"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="img-box">
+                        <img src="gugal pouch.png" alt="Gugal">
+                    </div>
+                    <div class="details">
+                        <h3>Gugal Zipper</h3>
+                        <span class="qty">Net Qty: 20 sticks</span>
+                        <span class="price">₹20.00</span>
+                        <a href="https://wa.me/919354646811?text=Interested%20in%20Gugal%20Zipper" class="order-btn">
+                            <i class="fab fa-whatsapp"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="img-box">
+                        <img src="gulab.png" alt="Gulab">
+                    </div>
+                    <div class="details">
+                        <h3>Gulab Zipper</h3>
+                        <span class="qty">Net Qty: 20 sticks</span>
+                        <span class="price">₹20.00</span>
+                        <a href="https://wa.me/919354646811?text=Interested%20in%20Gulab%20Zipper" class="order-btn">
+                            <i class="fab fa-whatsapp"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="img-box">
+                        <img src="post (1).png" alt="Kesar">
+                    </div>
+                    <div class="details">
+                        <h3>Kesar Zipper</h3>
+                        <span class="qty">Net Qty: 20 sticks</span>
+                        <span class="price">₹20.00</span>
+                        <a href="https://wa.me/919354646811?text=Interested%20in%20Kesar%20Zipper" class="order-btn">
+                            <i class="fab fa-whatsapp"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="img-box">
+                        <img src="post (1).png" alt="Gaura Gold">
+                    </div>
+                    <div class="details">
+                        <h3>Gaura Gold Zipper</h3>
+                        <span class="qty">Net Qty: 20 sticks</span>
+                        <span class="price">₹20.00</span>
+                        <a href="https://wa.me/919354646811?text=Interested%20in%20Gaura%20Gold%20Zipper" class="order-btn">
+                            <i class="fab fa-whatsapp"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="img-box">
+                        <img src="WhatsApp_Image_2022-08-18_at_8.42.03_PM-removebg-preview.png" alt="Hawan">
+                    </div>
+                    <div class="details">
+                        <h3>Hawan Samagri</h3>
+                        <span class="qty">Net Qty: 1kg</span>
+                        <span class="price">₹100.00</span>
+                        <a href="https://wa.me/919354646811?text=Interested%20in%20Hawan%20Samagri" class="order-btn">
+                            <i class="fab fa-whatsapp"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FOOTER -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-col">
+                    <h3>Yukta Marketing Pvt. Ltd</h3>
+                    <p style="line-height: 1.6;">Authentic pooja essentials handcrafted with devotion. We ensure purity in every product to elevate your spiritual experience.</p>
+                    <div class="social-icons" style="margin-top: 25px;">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/919354646811"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul style="line-height: 2; list-style: none;">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Collection</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p style="margin-bottom: 15px;"><i class="fas fa-map-marker-alt" style="color: var(--primary); width: 25px;"></i> Dadri, Uttar Pradesh, India</p>
+                    <p style="margin-bottom: 15px;"><i class="fas fa-phone" style="color: var(--primary); width: 25px;"></i> +91 93546 46811</p>
+                    <p><i class="fas fa-envelope" style="color: var(--primary); width: 25px;"></i> info@yuktamarketing.com</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2024 Yukta Marketing Pvt. Ltd. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- 7. SCRIPT FOR ANIMATIONS & PARTICLES -->
+    <script>
+        // 1. Preloader Logic
+        window.addEventListener('load', () => {
+            // Keep loader for 2 seconds to show animation
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+                initParticles(); // Start particles after load
+            }, 2500);
+        });
+
+        // 2. Scroll Reveal Animation (Sequenced)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if(entry.isIntersecting) {
+                    // Add staggered delay based on index for grid items
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100); 
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach(card => observer.observe(card));
+
+        // 3. Hero Particle System (Golden Embers)
+        const canvas = document.getElementById('hero-particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = 'rgba(255, 215, 0, ' + (Math.random() * 0.5 + 0.2) + ')';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                // Wrap around screen
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = "gold";
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < 60; i++) {
+                particlesArray.push(new Particle());
+            }
+            animateParticles();
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
