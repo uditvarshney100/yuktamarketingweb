@@ -12,7 +12,7 @@
     <style>
         /* --- 1. VARIABLES & RESET --- */
         :root {
-            --primary: #d35400;
+            --primary: #d35400; 
             --primary-dark: #a04000;
             --gold: #FFD700;
             --gold-glow: #ffae00;
@@ -25,611 +25,17 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        html { scroll-behavior: smooth; overflow-x: hidden; }
+        html, body { 
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
 
         body {
             font-family: 'Lato', sans-serif;
             background-color: var(--cream);
             color: #333;
-            overflow-x: hidden;
             background-image: 
-                radial-gradient(var(--gold) 0.5px, transparent 0.5px), 
-                radial-gradient(var(--gold) 0.5px, var(--cream) 0.5px);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
-        }
-
-        /* --- 2. ROYAL GRAPHIC PRELOADER (Original Animations Kept) --- */
-        #preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #1a0f05;
-            overflow: hidden;
-        }
-
-        .bg-pattern {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.15;
-            background-image: radial-gradient(circle, var(--gold) 1px, transparent 1px);
-            background-size: 20px 20px;
-            z-index: 0;
-        }
-
-        .symbol-floater {
-            position: absolute;
-            color: var(--gold);
-            opacity: 0.15;
-            font-size: 2rem;
-            animation: floatBackground 15s infinite linear;
-            user-select: none;
-        }
-        .sym-1 { top: 15%; left: 15%; font-size: 3.5rem; }
-        .sym-2 { top: 25%; right: 15%; font-size: 2.5rem; animation-duration: 18s; }
-        .sym-3 { bottom: 20%; left: 25%; font-size: 4.5rem; animation-duration: 25s; }
-        .sym-4 { bottom: 35%; right: 25%; font-size: 3rem; animation-duration: 22s; }
-        .sym-5 { top: 50%; left: 5%; font-size: 2rem; animation-duration: 12s; }
-        .sym-6 { top: 10%; left: 50%; font-size: 2.5rem; opacity: 0.1; }
-        
-        @keyframes floatBackground {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-
-        .curtain {
-            position: absolute;
-            top: 0; height: 100%; width: 51%;
-            background: linear-gradient(135deg, #2c1e12 0%, #0f0800 100%);
-            z-index: 1;
-            transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1);
-        }
-        
-        .curtain-left { left: 0; transform-origin: left; }
-        .curtain-right { right: 0; transform-origin: right; }
-
-        .loader-content {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease-out;
-            max-width: 90vw;
-        }
-
-        .chakra-container {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .sun-rays {
-            position: absolute;
-            inset: 0;
-            border-radius: 40px;
-            background: conic-gradient(from 0deg, transparent 0%, rgba(255, 215, 0, 0.2) 10%, transparent 20%, rgba(255, 215, 0, 0.2) 30%, transparent 40%, rgba(255, 215, 0, 0.2) 50%, transparent 60%, rgba(255, 215, 0, 0.2) 70%, transparent 80%, rgba(255, 215, 0, 0.2) 90%, transparent 100%);
-            animation: spin 20s linear infinite;
-        }
-
-        .deco-ring {
-            position: absolute;
-            inset: 0; margin: auto;
-            width: 180px; height: 180px;
-            border: 2px dashed var(--gold);
-            border-radius: 30px;
-            animation: spin-reverse 15s linear infinite;
-        }
-
-        .loader-logo {
-            width: 140px; height: 140px;
-            border-radius: 20px; 
-            object-fit: contain;
-            padding: 10px;
-            z-index: 5;
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
-            border: 3px solid var(--gold);
-            animation: heartbeat 2s infinite;
-        }
-
-        .brand-title {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(1.5rem, 5vw, 2.2rem); 
-            font-weight: 900; 
-            letter-spacing: 2px;
-            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #aa771c);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            animation: goldShimmer 3s linear infinite; background-size: 200%;
-        }
-
-        .loading-bar {
-            width: 200px; height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px; margin: 15px auto;
-            position: relative; overflow: hidden;
-        }
-
-        .bar-fill {
-            position: absolute; left: 0; top: 0; height: 100%; width: 0%;
-            background: var(--gold);
-            box-shadow: 0 0 15px var(--gold);
-            animation: loadProgress 2s ease-in-out forwards;
-        }
-
-        body.loaded .curtain-left { transform: translateX(-100%); }
-        body.loaded .curtain-right { transform: translateX(100%); }
-        body.loaded #preloader { pointer-events: none; visibility: hidden; transition: visibility 0s 1.5s; }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
-        @keyframes goldShimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
-        @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
-        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-
-        /* --- 3. HEADER & MOBILE MENU --- */
-        header {
-            position: absolute;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 20px 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-img { 
-            height: clamp(50px, 10vw, 70px); 
-            width: auto; 
-            transition: transform 0.5s; 
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); 
-        }
-
-        .nav-links { display: flex; gap: 40px; }
-        
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.95rem;
-            letter-spacing: 1.5px;
-            position: relative;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            transition: color 0.3s;
-        }
-        .nav-links a:hover { color: var(--gold); }
-
-        .mobile-menu-btn {
-            display: none;
-            color: var(--gold);
-            font-size: 1.8rem;
-            cursor: pointer;
-            z-index: 1002;
-        }
-
-        /* --- 4. HERO SECTION (Alignment Updated) --- */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            color: white;
-            padding: 0 25px;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 120%;
-            background: url('https://images.unsplash.com/photo-1606293926075-69a00dbfde81?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
-            z-index: -2;
-            animation: slowZoom 25s infinite alternate ease-in-out;
-        }
-        @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
-            z-index: -1;
-        }
-
-        .hero-content {
-            z-index: 1;
-            padding: clamp(30px, 5vw, 60px);
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(8px);
-            border-left: 5px solid var(--gold);
-            border-radius: 0 20px 20px 0;
-            opacity: 0;
-            transform: translateX(-50px);
-            animation: heroReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 1.8s;
-            width: 100%;
-            max-width: 650px;
-            text-align: left; /* NEW ALIGNMENT: Left Aligned for Desktop */
-        }
-        @keyframes heroReveal { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
-
-        .hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2.2rem, 8vw, 4.5rem);
-            line-height: 1.1;
-            background: linear-gradient(to right, #FFD700, #FFF, #FFD700);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 15px;
-            animation: shine 5s linear infinite;
-            background-size: 200%;
-        }
-        @keyframes shine { to { background-position: 200% center; } }
-
-        .hero p {
-            font-size: clamp(1rem, 3vw, 1.4rem);
-            margin-bottom: 35px;
-            color: rgba(255,255,255,0.9);
-            letter-spacing: 1px;
-        }
-
-        /* --- 5. PRODUCTS SECTION --- */
-        .products { padding: 100px 0; overflow: hidden; position: relative; }
-
-        .section-header {
-            text-align: left; /* ALIGNMENT: Left aligned heading */
-            max-width: 1200px;
-            margin: 0 auto 50px;
-            padding: 0 25px;
-            position: relative;
-        }
-
-        .section-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2rem, 6vw, 3rem);
-            color: var(--primary);
-            display: inline-block;
-        }
-
-        .section-header::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--gold);
-            margin-top: 10px;
-        }
-
-        .product-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            padding: 0 25px;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.4s, box-shadow 0.4s;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .img-box {
-            height: 280px;
-            padding: 30px;
-            display: flex; align-items: center; justify-content: center;
-            background: #fafafa;
-        }
-
-        .img-box img { max-height: 100%; max-width: 100%; object-fit: contain; transition: 0.4s; }
-        .product-card:hover .img-box img { transform: scale(1.05); }
-
-        .details { padding: 30px; text-align: left; } /* ALIGNMENT: Card details left */
-
-        .details h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 10px; }
-
-        .price-tag {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--primary);
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .order-btn {
-            background: #25D366; color: white; text-decoration: none;
-            padding: 15px 25px; border-radius: 12px; font-weight: bold;
-            display: inline-flex; align-items: center; gap: 10px;
-            width: 100%; justify-content: center;
-            transition: 0.3s;
-        }
-        .order-btn:hover { background: #1da851; }
-
-        /* --- MOBILE MEDIA QUERIES --- */
-        @media (max-width: 768px) {
-            .mobile-menu-btn { display: block; }
-
-            .nav-links {
-                position: fixed;
-                top: 0; right: -100%;
-                height: 100vh;
-                width: 80%;
-                background: #1a0f05;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                z-index: 1001;
-                transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-
-            .nav-links.active { right: 0; }
-
-            .hero {
-                justify-content: center;
-                text-align: center;
-                padding: 0 15px;
-            }
-
-            .hero-overlay {
-                background: rgba(0,0,0,0.6);
-            }
-
-            .hero-content {
-                text-align: center;
-                border-left: none;
-                border-top: 5px solid var(--gold);
-                border-radius: 20px;
-                padding: 40px 20px;
-                transform: translateY(50px);
-                animation: heroRevealMobile 1.2s forwards 1.8s;
-            }
-            @keyframes heroRevealMobile { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-
-            .product-grid {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                padding-bottom: 30px;
-                gap: 20px;
-            }
-
-            .product-card {
-                flex: 0 0 85%;
-                scroll-snap-align: center;
-            }
-
-            .section-header { text-align: center; }
-            .section-header::after { margin: 10px auto 0; }
-        }
-
-        /* --- FOOTER & WA --- */
-        footer { background: #0f0800; color: #cdcdcd; padding: 80px 25px 40px; }
-        .footer-grid { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 50px; 
-            text-align: left;
-        }
-        
-        .footer-col h3 { color: var(--gold); font-family: 'Cinzel', serif; margin-bottom: 25px; font-size: 1.5rem; }
-        .footer-col p { line-height: 1.8; opacity: 0.8; }
-
-        .float-wa {
-            position: fixed; bottom: 30px; right: 30px;
-            width: 60px; height: 60px;
-            background: #25D366; color: white; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 32px; z-index: 1001;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            animation: floatBounce 3s ease-in-out infinite;
-        }
-        @keyframes floatBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-    </style>
-</head>
-<body>
-
-    <!-- 1. PRELOADER -->
-    <div id="preloader">
-        <div class="curtain curtain-left">
-            <i class="fas fa-leaf symbol-floater sym-1"></i>
-            <i class="fas fa-star symbol-floater sym-3"></i>
-            <i class="fas fa-fire-alt symbol-floater sym-5"></i>
-        </div>
-        <div class="curtain curtain-right">
-            <i class="fas fa-sun symbol-floater sym-2"></i>
-            <i class="fas fa-bahai symbol-floater sym-4"></i>
-            <i class="fas fa-spa symbol-floater sym-6"></i>
-        </div>
-        <div class="bg-pattern"></div>
-        
-        <div class="loader-content">
-            <div class="chakra-container">
-                <div class="sun-rays"></div>
-                <div class="deco-ring"></div>
-                <img src="logo.jpeg" alt="Loading..." class="loader-logo">
-            </div>
-            <div class="text-wrapper">
-                <h2 class="brand-title">SHRI HARI MANDIR</h2>
-                <div class="loading-bar"><div class="bar-fill"></div></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. WHATSAPP -->
-    <a href="https://wa.me/919354646811" class="float-wa" aria-label="WhatsApp Contact"><i class="fab fa-whatsapp"></i></a>
-
-    <!-- 3. HEADER -->
-    <header>
-        <div class="container">
-            <a href="#" class="brand"><img src="logo.jpeg" alt="Shri Hari Mandir Logo" class="logo-img"></a>
-            <div class="mobile-menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-            <nav class="nav-links" id="navLinks">
-                <div class="mobile-close-btn" style="display:none;" onclick="toggleMenu()"><i class="fas fa-times"></i></div>
-                <a href="#home" onclick="toggleMenu()">Home</a>
-                <a href="#products" onclick="toggleMenu()">Collection</a>
-                <a href="#footer" onclick="toggleMenu()">Contact</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- 4. HERO SECTION -->
-    <section id="home" class="hero">
-        <canvas id="hero-particles" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></canvas>
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Shri Hari Mandir</h1>
-            <p>Elevate your spiritual journey with our premium, handcrafted pooja essentials.</p>
-            <a href="#products" class="order-btn" style="background: var(--primary); width: auto; padding: 18px 45px; border-radius: 50px; font-size: 1.1rem;">Explore Collection</a>
-        </div>
-    </section>
-
-    <!-- 5. PRODUCTS SECTION -->
-    <section id="products" class="products">
-        <div class="section-header">
-            <h2>Divine Favorites</h2>
-        </div>
-        <div class="product-grid">
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="img-box"><img src="chandan psd pouchPNG.png" alt="Chandan Zipper"></div>
-                <div class="details">
-                    <h3>Chandan Zipper</h3>
-                    <span class="price-tag">₹20.00</span>
-                    <a href="https://wa.me/919354646811" class="order-btn"><i class="fab fa-whatsapp"></i> Order Now</a>
-                </div>
-            </div>
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="img-box"><img src="gugal pouch.png" alt="Gugal Zipper"></div>
-                <div class="details">
-                    <h3>Gugal Zipper</h3>
-                    <span class="price-tag">₹20.00</span>
-                    <a href="https://wa.me/919354646811" class="order-btn"><i class="fab fa-whatsapp"></i> Order Now</a>
-                </div>
-            </div>
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="img-box"><img src="gulab.png" alt="Gulab Zipper"></div>
-                <div class="details">
-                    <h3>Gulab Zipper</h3>
-                    <span class="price-tag">₹20.00</span>
-                    <a href="https://wa.me/919354646811" class="order-btn"><i class="fab fa-whatsapp"></i> Order Now</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. FOOTER -->
-    <footer id="footer">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h3>Yukta Marketing</h3>
-                <p>Leading provider of premium incense sticks and spiritual essentials, dedicated to bringing purity and peace to every home.</p>
-            </div>
-            <div class="footer-col">
-                <h3>Get In Touch</h3>
-                <p><i class="fas fa-map-marker-alt" style="margin-right: 10px; color: var(--gold);"></i> Dadri, Uttar Pradesh, India</p>
-                <p><i class="fas fa-phone-alt" style="margin-right: 10px; color: var(--gold); margin-top: 15px; display: inline-block;"></i> +91 93546 46811</p>
-            </div>
-            <div class="footer-col">
-                <h3>Follow Us</h3>
-                <div style="display: flex; gap: 15px; margin-top: 10px;">
-                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.5; font-size: 0.9rem;">
-            &copy; 2024 Yukta Marketing Pvt. Ltd. All Rights Reserved.
-        </div>
-    </footer>
-
-    <script>
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
-
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.body.classList.add('loaded');
-                initParticles();
-            }, 2500);
-        });
-
-        const canvas = document.getElementById('hero-particles');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particles = [];
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-            }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.y < 0) this.y = canvas.height;
-                if (this.y > canvas.height) this.y = 0;
-            }
-            draw() {
-                ctx.fillStyle = "rgba(255, 215, 0, 0.4)";
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = Array.from({length: 60}, () => new Particle());
-            animate();
-        }
-
-        function animate() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
-</body>
-</html>
-
                 radial-gradient(var(--gold) 0.5px, transparent 0.5px), 
                 radial-gradient(var(--gold) 0.5px, var(--cream) 0.5px);
             background-size: 30px 30px;
@@ -638,34 +44,21 @@
 
         /* --- 2. ROYAL GRAPHIC PRELOADER --- */
         #preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #1a0f05; /* Deep rich brown background */
-            overflow: hidden;
+            position: fixed; inset: 0; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            background: #1a0f05; overflow: hidden;
         }
 
-        /* --- BACKGROUND FULL OF GRAPHICS --- */
         .bg-pattern {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0.15;
             background-image: radial-gradient(circle, var(--gold) 1px, transparent 1px);
-            background-size: 20px 20px;
-            z-index: 0;
+            background-size: 20px 20px; z-index: 0;
         }
 
-        /* Floating Symbols in Background */
         .symbol-floater {
-            position: absolute;
-            color: var(--gold);
-            opacity: 0.15;
-            font-size: 2rem;
-            animation: floatBackground 15s infinite linear;
-            user-select: none;
+            position: absolute; color: var(--gold); opacity: 0.15;
+            font-size: 2rem; animation: floatBackground 15s infinite linear;
         }
         .sym-1 { top: 15%; left: 15%; font-size: 3.5rem; }
         .sym-2 { top: 25%; right: 15%; font-size: 2.5rem; animation-duration: 18s; }
@@ -680,553 +73,255 @@
             100% { transform: translateY(0) rotate(0deg); }
         }
 
-        /* The Gates/Curtains */
         .curtain {
-            position: absolute;
-            top: 0; height: 100%; width: 51%;
+            position: absolute; top: 0; height: 100%; width: 51%;
             background: linear-gradient(135deg, #2c1e12 0%, #0f0800 100%);
-            z-index: 1;
-            transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1);
-            border: none;
+            z-index: 1; transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1);
         }
-        
-        .curtain-left { left: 0; transform-origin: left; }
-        .curtain-right { right: 0; transform-origin: right; }
+        .curtain-left { left: 0; }
+        .curtain-right { right: 0; }
 
-        /* Loader Content Wrapper */
         .loader-content {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease-out;
+            position: relative; z-index: 10; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease-out; transform: scale(0.9);
         }
 
-        /* --- NEW GRAPHIC: Radiant Chakra/Mandala --- */
         .chakra-container {
-            position: relative;
-            width: 260px;
-            height: 260px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
+            position: relative; width: 260px; height: 260px;
+            display: flex; justify-content: center; align-items: center; margin-bottom: 20px;
         }
 
-        /* Spinning Rays */
         .sun-rays {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border-radius: 40px; /* Soft square */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 40px;
             background: conic-gradient(from 0deg, transparent 0%, rgba(255, 215, 0, 0.2) 10%, transparent 20%, rgba(255, 215, 0, 0.2) 30%, transparent 40%, rgba(255, 215, 0, 0.2) 50%, transparent 60%, rgba(255, 215, 0, 0.2) 70%, transparent 80%, rgba(255, 215, 0, 0.2) 90%, transparent 100%);
-            animation: spin 20s linear infinite;
-            z-index: 1;
+            animation: spin 20s linear infinite; z-index: 1;
         }
 
-        /* Decorative Ring */
         .deco-ring {
-            position: absolute;
-            inset: 0; margin: auto;
+            position: absolute; inset: 0; margin: auto;
             width: 210px; height: 210px;
-            border: 2px dashed var(--gold);
-            border-radius: 30px; /* Matches logo shape */
-            animation: spin-reverse 15s linear infinite;
-            z-index: 2;
+            border: 2px dashed var(--gold); border-radius: 30px;
+            animation: spin-reverse 15s linear infinite; z-index: 2;
         }
 
-        /* The Logo itself - BACKGROUND TRANSPARENT */
         .loader-logo {
-            width: 160px; height: 160px;
-            border-radius: 20px; 
-            object-fit: contain;
-            background: transparent; 
-            padding: 15px; /* Padding to prevent cut-off */
-            z-index: 5;
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
-            border: 3px solid var(--gold);
-            animation: heartbeat 2s infinite;
+            width: 160px; height: 160px; border-radius: 20px;
+            object-fit: contain; background: transparent; padding: 15px;
+            z-index: 5; box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+            border: 3px solid var(--gold); animation: heartbeat 2s infinite;
         }
 
-        /* Text Styling */
         .text-wrapper { text-align: center; z-index: 10; margin-top: -20px; }
 
         .brand-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem; font-weight: 900; 
+            font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900;
             letter-spacing: 2px; margin-bottom: 5px;
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #aa771c);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
+            -webkit-background-clip: text; color: transparent;
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            animation: goldShimmer 3s linear infinite; background-size: 200%;
         }
 
-        .sub-brand {
-            font-family: 'Lato', sans-serif;
-            font-size: 0.9rem;
-            color: #ccc;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            font-weight: 300;
-        }
+        .sub-brand { font-family: 'Lato', sans-serif; font-size: 0.9rem; color: #ccc; margin-bottom: 20px; font-weight: 300; }
+        .loading-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 0 auto 15px; overflow: hidden; position: relative; }
+        .bar-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--gold); animation: loadProgress 2s ease-in-out forwards; }
 
-        .loading-bar {
-            width: 200px; height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px; margin: 0 auto 15px;
-            position: relative; overflow: hidden;
-        }
-
-        .bar-fill {
-            position: absolute; left: 0; top: 0; height: 100%; width: 0%;
-            background: var(--gold);
-            box-shadow: 0 0 15px var(--gold);
-            animation: loadProgress 2s ease-in-out forwards;
-        }
-
-        .tagline {
-            font-family: 'Lato', sans-serif;
-            font-size: 1.2rem; 
-            letter-spacing: 2px;
-            color: var(--gold);
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        /* Preloader Exit State */
         body.loaded .curtain-left { transform: translateX(-100%); }
         body.loaded .curtain-right { transform: translateX(100%); }
-        body.loaded .loader-content { opacity: 0; transform: scale(1.1); }
+        body.loaded .loader-content { opacity: 0; }
         body.loaded #preloader { pointer-events: none; visibility: hidden; transition: visibility 0s 1.5s; }
 
-        /* Animation Keyframes */
+        /* --- 3. HEADER --- */
+        header {
+            background: transparent; position: absolute; width: 100%; top: 0;
+            z-index: 1000; padding: 15px 0; transition: all 0.3s;
+        }
+
+        .container {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo-img { height: 60px; width: auto; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            color: #fff; font-weight: 700; text-transform: uppercase;
+            font-size: 0.9rem; text-decoration: none;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .mobile-menu-btn { display: none; color: var(--gold); font-size: 1.8rem; cursor: pointer; z-index: 1002; }
+        .mobile-close-btn { display: none; }
+
+        /* --- 4. HERO SECTION --- */
+        .hero {
+            position: relative; height: 90vh; display: flex;
+            align-items: center; justify-content: center; text-align: center;
+            overflow: hidden; color: white;
+        }
+
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('https://images.unsplash.com/photo-1606293926075-69a00dbfde81?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            z-index: -2; animation: slowZoom 25s infinite alternate ease-in-out;
+        }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(19, 10, 0, 0.8)); z-index: -1; }
+        #hero-particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+
+        .hero-content {
+            z-index: 1; padding: 50px; background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px); border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); opacity: 0;
+            transform: translateY(50px); animation: heroReveal 1.2s forwards 1.8s;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif; font-size: 4rem;
+            background: linear-gradient(to right, #FFD700, #FFF, #FFD700);
+            -webkit-background-clip: text; color: transparent; margin-bottom: 10px;
+        }
+        
+        .hero .brand-sub { font-size: 1.1rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 40px; color: #eee; }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #d35400, #ff8c00);
+            color: white; padding: 16px 45px; font-weight: bold; border-radius: 50px;
+            text-decoration: none; display: inline-block; text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(211, 84, 0, 0.6);
+        }
+
+        .btn-gold:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(211, 84, 0, 0.8); }
+
+        /* --- 5. PRODUCTS SECTION --- */
+        .products { padding: 80px 0; position: relative; overflow: hidden; }
+
+        .blob {
+            position: absolute; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent 70%);
+            border-radius: 50%; z-index: -1; animation: floatBlob 10s infinite alternate;
+        }
+        .blob1 { top: 10%; left: -100px; }
+        .blob2 { bottom: 10%; right: -100px; }
+
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { 
+            font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 5vw, 3rem); 
+            color: var(--primary); position: relative; display: inline-block; padding-bottom: 15px; 
+        }
+        .section-header h2::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 4px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 2px;
+        }
+        .section-header p { color: #666; font-size: 1rem; letter-spacing: 1px; margin-top: 10px; }
+        
+        /* Grid Layout */
+        .product-grid {
+            display: grid; 
+            /* Desktop: 3 Columns */
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 40px; 
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: var(--shadow-sm); transition: 0.5s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
+
+        .img-box { height: 280px; background: radial-gradient(circle, #fff, #fafafa); display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .img-box img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+
+        .details { padding: 25px; text-align: center; background: white; }
+        .details h3 { font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 8px; color: #222; }
+        .qty { color: #888; font-size: 0.9rem; margin-bottom: 15px; display: block; }
+        .price { display: block; color: var(--primary); font-weight: 900; font-size: 1.3rem; margin-bottom: 15px; }
+
+        .order-btn {
+            background: #25D366; color: white; text-decoration: none; padding: 12px 30px;
+            border-radius: 30px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;
+            transition: all 0.3s; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        /* --- MOBILE OPTIMIZATIONS --- */
+        @media (max-width: 900px) {
+            .product-grid {
+                /* Tablet: 2 Columns */
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            
+            /* Layout Adjustments */
+            .container { flex-direction: row; justify-content: space-between; }
+            .mobile-menu-btn { display: block; }
+            .mobile-close-btn { display: block; position: absolute; top: 30px; right: 30px; color: var(--gold); font-size: 2rem; cursor: pointer; }
+
+            /* Side Drawer */
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 80%; height: 100vh;
+                background: linear-gradient(135deg, #1a0f05, #000);
+                flex-direction: column; justify-content: center; gap: 40px;
+                z-index: 1001; transition: 0.4s ease-in-out;
+                box-shadow: -10px 0 20px rgba(0,0,0,0.5);
+                border-left: 2px solid var(--gold);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.2rem; color: var(--gold); text-shadow: none; }
+
+            /* Scaling */
+            .hero h1 { font-size: 2.5rem; }
+            .hero-content { padding: 30px 20px; width: 95%; }
+            .loader-content { transform: scale(0.8); }
+            .brand-title { font-size: 1.8rem; }
+
+            /* Mobile Grid: 1 Column (Big, Premium Cards) */
+            .product-grid {
+                grid-template-columns: 1fr; 
+                gap: 30px;
+                padding: 15px;
+            }
+            
+            .product-card { border-radius: 15px; }
+            .img-box { height: 220px; }
+            
+            .order-btn { width: 100%; justify-content: center; }
+        }
+
+        /* --- 6. FOOTER --- */
+        footer { background: #0f0800; color: #cdcdcd; padding: 60px 0 20px; border-top: 5px solid var(--primary); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; padding-bottom: 40px; }
+        .footer-col h3 { color: var(--gold); font-family: 'Cinzel', serif; margin-bottom: 20px; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 5px; }
+        .copyright { background: #080400; text-align: center; padding: 20px; font-size: 0.8rem; color: #666; }
+
+        .float-wa {
+            position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px;
+            background: #25D366; color: white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-size: 30px; z-index: 1001;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            animation: floatBounce 3s ease-in-out infinite;
+        }
+
+        /* Animations */
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
         @keyframes goldShimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
         @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
-        @keyframes pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
         @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
         @keyframes heroReveal { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes shine { to { background-position: 200% center; } }
         @keyframes floatBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes floatBlob { from { transform: translate(0,0); } to { transform: translate(30px, 30px); } }
-
-
-        /* --- 3. HEADER (Transparent & Mobile Friendly) --- */
-        header {
-            background: transparent;
-            position: absolute;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 15px 0;
-            border-bottom: none;
-            transition: all 0.3s;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-            z-index: 1002; /* Above mobile menu */
-        }
-
-        .logo-img { 
-            height: 60px; 
-            width: auto; 
-            transition: transform 0.5s; 
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); 
-        }
-        .brand:hover .logo-img { transform: rotate(10deg); }
-
-        /* Desktop Nav */
-        .nav-links { display: flex; gap: 30px; }
-        
-        .nav-links a {
-            color: #fff;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            position: relative;
-            transition: color 0.3s;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 0; height: 2px; background: var(--gold);
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after { width: 100%; }
-
-        /* Mobile Menu Button */
-        .mobile-menu-btn {
-            display: none;
-            color: var(--gold);
-            font-size: 1.8rem;
-            cursor: pointer;
-            z-index: 1002;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-        }
-
-        .mobile-close-btn { display: none; }
-
-        /* --- 4. HERO SECTION --- */
-        .hero {
-            position: relative;
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-            color: white;
-        }
-
-        #hero-particles {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; pointer-events: none;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 120%;
-            background: url('https://images.unsplash.com/photo-1606293926075-69a00dbfde81?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
-            z-index: -2;
-            animation: slowZoom 25s infinite alternate ease-in-out;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(19, 10, 0, 0.8));
-            z-index: -1;
-        }
-
-        .hero-content {
-            z-index: 1;
-            padding: 50px;
-            background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            opacity: 0;
-            transform: translateY(50px);
-            animation: heroReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 1.8s;
-        }
-
-        .hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            background: linear-gradient(to right, #FFD700, #FFF, #FFD700);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 20px;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: shine 5s linear infinite;
-            background-size: 200%;
-        }
-
-        .hero .brand-sub {
-            font-family: 'Lato', sans-serif;
-            font-size: 1.1rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: -15px;
-            margin-bottom: 30px;
-            font-weight: 700;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-        }
-
-        .hero p {
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-            margin-bottom: 40px;
-            color: #eee;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-        }
-
-        .btn-gold {
-            position: relative;
-            background: linear-gradient(45deg, #d35400, #ff8c00);
-            color: white;
-            padding: 16px 45px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            text-decoration: none;
-            display: inline-block;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 0 20px rgba(211, 84, 0, 0.6);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .btn-gold:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(211, 84, 0, 0.8); }
-
-        /* --- 5. PRODUCTS SECTION (Mobile Swipe) --- */
-        .products { padding: 80px 0; position: relative; }
-
-        .blob {
-            position: absolute;
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            animation: floatBlob 10s ease-in-out infinite alternate;
-        }
-        .blob1 { top: 10%; left: -100px; }
-        .blob2 { bottom: 10%; right: -100px; animation-delay: 5s; }
-
-        .section-header { text-align: center; margin-bottom: 50px; }
-
-        .section-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
-            color: var(--primary);
-            position: relative;
-            display: inline-block;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-        
-        .section-header h2 i {
-            font-size: 2rem; color: var(--gold); vertical-align: middle; margin: 0 15px;
-            animation: spin 8s linear infinite;
-        }
-
-        /* Product Grid (Responsive) */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            padding: 20px;
-        }
-
-        /* Product Card */
-        .product-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.5s;
-            position: relative;
-            border: 1px solid rgba(0,0,0,0.05);
-            min-width: 280px; /* Ensure card width on mobile */
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .img-box {
-            height: 280px;
-            padding: 30px;
-            display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle at center, #fff, #fafafa);
-            position: relative; overflow: hidden;
-        }
-
-        .img-box img {
-            max-height: 100%; max-width: 100%; object-fit: contain;
-            transition: transform 0.6s; z-index: 1;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-        }
-
-        .product-card:hover .img-box img { transform: scale(1.15); }
-
-        .details { padding: 25px; text-align: center; background: white; }
-
-        .details h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            color: #222;
-        }
-
-        .qty { color: #888; font-size: 0.9rem; margin-bottom: 15px; display: block; }
-
-        .price {
-            display: block; color: var(--primary); font-weight: 900;
-            font-size: 1.3rem; margin-bottom: 15px;
-        }
-
-        .order-btn {
-            background: #25D366; color: white; text-decoration: none;
-            padding: 10px 25px; border-radius: 30px; font-weight: bold;
-            display: inline-flex; align-items: center; gap: 8px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
-        }
-        .order-btn:hover { background: #128c7e; transform: scale(1.05); }
-
-        /* --- MOBILE OPTIMIZATIONS --- */
-        @media (max-width: 768px) {
-            
-            /* Header */
-            .container { 
-                flex-direction: row; /* Keep logo and menu button in row */
-                justify-content: space-between; 
-            }
-            
-            .mobile-menu-btn { display: block; }
-
-            /* Mobile Side Drawer Menu */
-            .nav-links { 
-                position: fixed;
-                top: 0; right: -100%; /* Hidden initially */
-                height: 100vh;
-                width: 75%;
-                background: linear-gradient(135deg, #2c1e12 0%, #0f0800 100%);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 40px;
-                z-index: 1001;
-                transition: 0.4s ease-in-out;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-                border-left: 2px solid var(--gold);
-            }
-
-            .nav-links.active { right: 0; }
-
-            /* Close Button inside drawer */
-            .mobile-close-btn {
-                display: block;
-                position: absolute;
-                top: 30px; right: 30px;
-                color: var(--gold);
-                font-size: 2rem;
-                cursor: pointer;
-            }
-
-            /* Links inside Drawer */
-            .nav-links a {
-                font-size: 1.2rem;
-                color: var(--gold);
-                text-shadow: none;
-            }
-
-            /* Hero */
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1rem; }
-            .hero-content { padding: 30px 20px; width: 90%; }
-
-            /* Preloader Scale */
-            .loader-content { transform: scale(0.8); }
-            .brand-title { font-size: 1.8rem; }
-
-            /* Product Horizontal Scroll (Snap) */
-            .product-grid {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                padding-bottom: 40px; 
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none; 
-                gap: 20px;
-            }
-            .product-grid::-webkit-scrollbar { display: none; }
-
-            .product-card {
-                scroll-snap-align: center;
-                flex: 0 0 85%; /* Card takes 85% width */
-                margin-right: 10px;
-            }
-
-            .section-header h2 { font-size: 2rem; }
-            .section-header h2 i { font-size: 1.5rem; }
-            
-            /* Mobile Swipe Hint */
-            .swipe-hint {
-                display: block;
-                text-align: center;
-                color: #888;
-                font-size: 0.8rem;
-                margin-top: -30px;
-                margin-bottom: 20px;
-                animation: pulse 2s infinite;
-            }
-        }
-        
-        .swipe-hint { display: none; } /* Hidden on Desktop */
-
-        /* --- 6. FOOTER --- */
-        footer {
-            background: #0f0800;
-            color: #cdcdcd;
-            padding-top: 60px;
-            position: relative;
-            border-top: 5px solid var(--primary);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            padding-bottom: 40px;
-        }
-
-        .footer-col h3 {
-            color: var(--gold);
-            font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--primary);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        .social-icons a {
-            display: inline-flex; justify-content: center; align-items: center;
-            width: 40px; height: 40px; border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            color: var(--gold); margin-right: 15px;
-            font-size: 1.2rem;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .copyright {
-            background: #080400;
-            border-top: 1px solid #222;
-            text-align: center;
-            padding: 20px;
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        /* --- FLOATING WHATSAPP --- */
-        .float-wa {
-            position: fixed; bottom: 20px; right: 20px;
-            width: 55px; height: 55px;
-            background: #25D366; color: white;
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 30px; z-index: 1001;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            animation: floatBounce 3s ease-in-out infinite;
-        }
-
     </style>
 </head>
 <body>
@@ -1277,20 +372,15 @@
                 <img src="logo.jpeg" alt="Logo" class="logo-img">
             </a>
             
-            <!-- Mobile Menu Toggle Button -->
-            <div class="mobile-menu-btn" onclick="toggleMenu()">
+            <div class="mobile-menu-btn" id="mobile-btn">
                 <i class="fas fa-bars"></i>
             </div>
 
-            <!-- Navigation Links (Desktop & Mobile Drawer) -->
             <nav class="nav-links" id="navLinks">
-                <!-- Close Button for Mobile -->
-                <div class="mobile-close-btn" onclick="toggleMenu()">
-                    <i class="fas fa-times"></i>
-                </div>
-                <a href="#home" onclick="toggleMenu()">Home</a>
-                <a href="#products" onclick="toggleMenu()">Collection</a>
-                <a href="#footer" onclick="toggleMenu()">Contact</a>
+                <div class="mobile-close-btn" id="close-btn"><i class="fas fa-times"></i></div>
+                <a href="#home" class="nav-item">Home</a>
+                <a href="#products" class="nav-item">Collection</a>
+                <a href="#footer" class="nav-item">Contact</a>
             </nav>
         </div>
     </header>
@@ -1303,7 +393,7 @@
         <div class="hero-content">
             <h1>Shri Hari Mandir</h1>
             <p class="brand-sub">Brand by Yukta Marketing Pvt. Ltd.</p>
-            <p>Embrace the Purity. Elevate your Spirit.</p>
+            <p style="font-size:1.2rem; color:#eee;">Embrace the Purity. Elevate your Spirit.</p>
             <a href="#products" class="btn-gold">Explore Collection</a>
         </div>
     </section>
@@ -1313,14 +403,12 @@
         <div class="blob blob1"></div>
         <div class="blob blob2"></div>
 
+        <!-- Added style="display: block;" to force vertical stacking -->
         <div class="container" style="display: block;">
-            
             <div class="section-header">
-                <h2><i class="fas fa-star star-icon"></i> Star Products <i class="fas fa-star star-icon"></i></h2>
+                <h2><i class="fas fa-star" style="font-size:1rem; color:var(--gold);"></i> STAR PRODUCTS <i class="fas fa-star" style="font-size:1rem; color:var(--gold);"></i></h2>
+                <p>Handpicked for your Devotion</p>
             </div>
-
-            <!-- Mobile Hint -->
-            <div class="swipe-hint"><i class="fas fa-arrows-alt-h"></i> Swipe to see more</div>
 
             <div class="product-grid">
                 
@@ -1459,21 +547,34 @@
     <!-- 7. SCRIPT FOR ANIMATIONS & PARTICLES -->
     <script>
         // Toggle Mobile Menu
+        const mobileBtn = document.getElementById('mobile-btn');
+        const navLinks = document.getElementById('navLinks');
+        const closeBtn = document.getElementById('close-btn');
+        const navItems = document.querySelectorAll('.nav-item');
+
         function toggleMenu() {
-            const nav = document.getElementById('navLinks');
-            nav.classList.toggle('active');
+            navLinks.classList.toggle('active');
         }
+
+        mobileBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        
+        // Auto Close Menu on click
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
 
         // 1. Preloader Logic
         window.addEventListener('load', () => {
-            // Keep loader for 2 seconds to show animation
             setTimeout(() => {
                 document.body.classList.add('loaded');
-                initParticles(); // Start particles after load
+                initParticles(); 
             }, 2500);
         });
 
-        // 3. Hero Particle System (Golden Embers)
+        // 3. Hero Particle System
         const canvas = document.getElementById('hero-particles');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -1533,4 +634,3 @@
     </script>
 </body>
 </html>
-
